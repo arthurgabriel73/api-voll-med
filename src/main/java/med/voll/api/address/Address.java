@@ -1,19 +1,25 @@
 package med.voll.api.address;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
-@Table(name = "physicians")
-@Entity(name = "Physician")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
+
+  public Address(AddressRecord address) {
+    this.publicPlace = address.publicPlace();
+    this.neighborhood = address.neighborhood();
+    this.cep = address.cep();
+    this.city = address.city();
+    this.uf = address.uf();
+    this.number = address.number();
+    this.complement = address.complement();
+  }
 
   private String publicPlace;
   private String neighborhood;

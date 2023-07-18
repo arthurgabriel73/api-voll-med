@@ -15,6 +15,14 @@ import med.voll.api.address.Address;
 @EqualsAndHashCode(of = "id")
 public class Physician {
 
+  public Physician(RegisterPhysicianRecord data) {
+    this.name = data.name();
+    this.email = data.email();
+    this.crm = data.crm();
+    this.specialty = data.specialty();
+    this.address = new Address(data.address());
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
