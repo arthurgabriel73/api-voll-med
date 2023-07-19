@@ -26,5 +26,6 @@ public record RegisterPhysicianRecord(
 	Specialty specialty,
 
 	@NotNull 
-	@Valid AddressRecord address) {
+	@Valid AddressRecord address
+	) {
 }
