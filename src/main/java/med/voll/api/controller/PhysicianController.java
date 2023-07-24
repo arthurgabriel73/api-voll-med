@@ -22,7 +22,6 @@ public class PhysicianController {
   @PostMapping
   @Transactional
   public void register(@RequestBody @Valid RegisterPhysicianRecord data) {
-    Physician physician = new Physician(data);
-    physicianRepository.save(physician);
+    physicianRepository.save(new Physician(data));
   }
 }
