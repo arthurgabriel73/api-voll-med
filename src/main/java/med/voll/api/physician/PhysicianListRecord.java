@@ -1,14 +1,16 @@
 package med.voll.api.physician;
 
 public record PhysicianListRecord (
-   String name,
-   String email,
-   String crm,
-   Specialty specialty
+  Long id,
+  String name,
+  String email,
+  String crm,
+  Specialty specialty
 
 ) {
   public PhysicianListRecord(Physician physician) {
     this(
+      physician.getId(),
       physician.getName(),
       physician.getEmail(),
       physician.getCrm(),
