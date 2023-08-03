@@ -16,14 +16,7 @@ import med.voll.api.address.Address;
 @EqualsAndHashCode(of = "id")
 public class Physician {
 
-  public Physician(RegisterPhysicianRecord data) {
-    this.name = data.name();
-    this.email = data.email();
-    this.phone = data.phone();
-    this.crm = data.crm();
-    this.specialty = data.specialty();
-    this.address = new Address(data.address());
-  }
+  
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +32,18 @@ public class Physician {
   @Embedded
   private Address address;
 
+  private Boolean active;
+
+  public Physician(RegisterPhysicianRecord data) {
+    this.active = true;
+    this.name = data.name();
+    this.email = data.email();
+    this.phone = data.phone();
+    this.crm = data.crm();
+    this.specialty = data.specialty();
+    this.address = new Address(data.address());
+  }
+
   public void updateData(@Valid PhysicianUpdateRecord data) {
     if (data.name() != null) {
       this.name = data.name();
@@ -49,6 +54,10 @@ public class Physician {
     if (data.address() != null) {
       this.address.updateData(data.address());
     }
+  }
+
+  public void delete() {
+    this.active = false;
   }
 
 }
