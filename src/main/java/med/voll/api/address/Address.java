@@ -29,4 +29,31 @@ public class Address {
   private String number;
   private String complement;
 
+  public void updateData(AddressRecord address) {
+    if (address.publicPlace() != null) {
+      this.publicPlace = address.publicPlace();
+    }
+    if (address.neighborhood() != null) {
+      this.neighborhood = address.neighborhood();
+    }
+    if (address.cep() != null) {
+      this.cep = address.cep();
+    }
+    if (address.city() != null) {
+      this.city = address.city();
+    }
+    if (address.uf() != null) {
+      this.uf = address.uf();
+    }
+    if (address.publicPlace() != null) {
+      this.publicPlace = address.publicPlace();
+    }
+    if (address.number() != null) {
+      this.number = address.number();
+    }
+    if (address.complement() != null) {
+      this.complement = address.complement();
+    }
+  }
+
 }

@@ -19,14 +19,6 @@ import med.voll.api.address.Address;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Patient {
-  
-  public Patient(RegisterPatientRecord data) {
-    this.name = data.name();
-    this.email = data.email();
-    this.phone = data.phone();
-    this.cpf = data.cpf();
-    this.address = new Address(data.address());
-  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +30,19 @@ public class Patient {
 
   @Embedded
   private Address address;
+
+  private Boolean active;
+
+  public Patient(RegisterPatientRecord data) {
+    this.active = true;
+    this.name = data.name();
+    this.email = data.email();
+    this.phone = data.phone();
+    this.cpf = data.cpf();
+    this.address = new Address(data.address());
+  }
+
+  public void delete() {
+    this.active = false;
+  }
 }
