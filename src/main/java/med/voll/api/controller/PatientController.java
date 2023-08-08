@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import jakarta.validation.Valid;
 import med.voll.api.patient.Patient;
 import med.voll.api.patient.PatientListRecord;
 import med.voll.api.patient.PatientRepository;
+import med.voll.api.patient.PatientUpdateRecord;
 import med.voll.api.patient.RegisterPatientRecord;
 
 @RestController
@@ -44,6 +46,14 @@ public class PatientController {
   Pageable pageable) {
     return patientRepository.findAllByActiveTrue(pageable).map(PatientListRecord::new);
   }
+
+  @PutMapping
+  @Transactional
+  public void update(@RequestBody @Valid PatientUpdateRecord data) {
+    var patient = patientRepository.getReferenceById(data.id());
+    patient.updateData(data);
+  }
+
 
   @DeleteMapping("/{id}")
   @Transactional

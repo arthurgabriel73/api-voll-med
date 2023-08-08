@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,5 +45,20 @@ public class Patient {
 
   public void delete() {
     this.active = false;
+  }
+
+  public void updateData(@Valid PatientUpdateRecord data) {
+    if (data.name() != null) {
+      this.name = data.name();
+    }
+    if (data.email() != null) {
+      this.email = data.email();
+    }
+    if (data.phone() != null) {
+      this.phone = data.phone();
+    }
+    if (data.address() != null) {
+      this.address.updateData(data.address());
+    }
   }
 }
