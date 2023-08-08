@@ -37,9 +37,7 @@ public class PhysicianController {
   @Transactional
   public ResponseEntity<PhysicianDetailData> register(@RequestBody @Valid RegisterPhysicianRecord data, UriComponentsBuilder uriBuilder) {
     var physician = physicianRepository.save(new Physician(data));
-
     var uri = uriBuilder.path("/physicians/{id}").buildAndExpand(physician.getId()).toUri();
-
     return ResponseEntity.created(uri).body(new PhysicianDetailData(physician));
   }
 
@@ -57,7 +55,7 @@ public class PhysicianController {
 
   @GetMapping("/{id}")
   @Transactional
-  public ResponseEntity detail(@PathVariable Long id) {
+  public ResponseEntity<PhysicianDetailData> detail(@PathVariable Long id) {
     var physician = physicianRepository.getReferenceById(id);
     return ResponseEntity.ok(new PhysicianDetailData(physician));
   }
