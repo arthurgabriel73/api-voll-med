@@ -1,18 +1,18 @@
-package med.voll.api.patient;
+package med.voll.api.domain.patient;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.address.AddressRecord;
+import med.voll.api.domain.address.AddressRecord;
 
 public record RegisterPatientRecord(
-  @NotBlank
+  @NotBlank(message = "Must choose a name.")
   String name,
 
   @NotBlank
-  @Email
+  @Email(message = "{email.invalido}")
   String email,
 
   @NotBlank()

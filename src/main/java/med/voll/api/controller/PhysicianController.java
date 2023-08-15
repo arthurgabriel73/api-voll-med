@@ -1,6 +1,5 @@
 package med.voll.api.controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.physician.Physician;
-import med.voll.api.physician.PhysicianDetailData;
-import med.voll.api.physician.PhysicianListRecord;
-import med.voll.api.physician.PhysicianRepository;
-import med.voll.api.physician.PhysicianUpdateRecord;
-import med.voll.api.physician.RegisterPhysicianRecord;
+import med.voll.api.domain.physician.*;
 
 @RestController
 @RequestMapping("/physicians")
@@ -70,7 +64,7 @@ public class PhysicianController {
 
   @DeleteMapping("/{id}")
   @Transactional
-  public ResponseEntity delete(@PathVariable Long id) {
+  public ResponseEntity<Object> delete(@PathVariable Long id) {
     var physician = physicianRepository.getReferenceById(id);
     physician.delete();
 

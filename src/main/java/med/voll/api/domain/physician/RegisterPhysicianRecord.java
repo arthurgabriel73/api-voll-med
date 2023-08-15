@@ -1,11 +1,11 @@
-package med.voll.api.physician;
+package med.voll.api.domain.physician;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.address.AddressRecord;
+import med.voll.api.domain.address.AddressRecord;
 
 public record RegisterPhysicianRecord(
 	@NotBlank 
@@ -19,7 +19,7 @@ public record RegisterPhysicianRecord(
 	String phone,
 
 	@NotBlank 
-	@Pattern(regexp = "\\d{4,6}") 
+	@Pattern(regexp = "\\d{4,6}", message = "{crm.invalid}") 
 	String crm,
 
 	@NotNull 

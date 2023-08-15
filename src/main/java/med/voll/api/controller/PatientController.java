@@ -18,13 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.patient.Patient;
-import med.voll.api.patient.PatientDetailData;
-import med.voll.api.patient.PatientListRecord;
-import med.voll.api.patient.PatientRepository;
-import med.voll.api.patient.PatientUpdateRecord;
-import med.voll.api.patient.RegisterPatientRecord;
-import med.voll.api.physician.PhysicianDetailData;
+import med.voll.api.domain.patient.*;
 
 @RestController
 @RequestMapping("/patients")
@@ -72,7 +66,7 @@ public class PatientController {
 
   @DeleteMapping("/{id}")
   @Transactional
-  public ResponseEntity delete(@PathVariable Long id) {
+  public ResponseEntity<Object> delete(@PathVariable Long id) {
     var patient = patientRepository.getReferenceById(id);
     patient.delete();
 

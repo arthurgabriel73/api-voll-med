@@ -1,22 +1,25 @@
-package med.voll.api.physician;
+package med.voll.api.domain.patient;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.address.Address;
+import med.voll.api.domain.address.Address;
 
-@Table(name = "physicians")
-@Entity(name = "Physician")
+@Table(name = "patients")
+@Entity(name = "Patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Physician {
-
-  
+public class Patient {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,29 +27,32 @@ public class Physician {
   private String name;
   private String email;
   private String phone;
-  private String crm;
-
-  @Enumerated(EnumType.STRING)
-  private Specialty specialty;
+  private String cpf;
 
   @Embedded
   private Address address;
 
   private Boolean active;
 
-  public Physician(RegisterPhysicianRecord data) {
+  public Patient(RegisterPatientRecord data) {
     this.active = true;
     this.name = data.name();
     this.email = data.email();
     this.phone = data.phone();
-    this.crm = data.crm();
-    this.specialty = data.specialty();
+    this.cpf = data.cpf();
     this.address = new Address(data.address());
   }
 
-  public void updateData(@Valid PhysicianUpdateRecord data) {
+  public void delete() {
+    this.active = false;
+  }
+
+  public void updateData(@Valid PatientUpdateRecord data) {
     if (data.name() != null) {
       this.name = data.name();
+    }
+    if (data.email() != null) {
+      this.email = data.email();
     }
     if (data.phone() != null) {
       this.phone = data.phone();
@@ -55,9 +61,4 @@ public class Physician {
       this.address.updateData(data.address());
     }
   }
-
-  public void delete() {
-    this.active = false;
-  }
-
 }
