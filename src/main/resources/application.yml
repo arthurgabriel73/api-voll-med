@@ -14,3 +14,6 @@ spring:
         page-parameter: pagina
         size-parameter: tamanho
         sort-parameter: ordem
+server:
+  error:
+    include-stacktrace: never

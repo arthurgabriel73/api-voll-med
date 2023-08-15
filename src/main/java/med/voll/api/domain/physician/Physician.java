@@ -1,25 +1,22 @@
-package med.voll.api.patient;
+package med.voll.api.domain.physician;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.address.Address;
+import med.voll.api.domain.address.Address;
 
-@Table(name = "patients")
-@Entity(name = "Patient")
+@Table(name = "physicians")
+@Entity(name = "Physician")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Patient {
+public class Physician {
+
+  
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,32 +24,29 @@ public class Patient {
   private String name;
   private String email;
   private String phone;
-  private String cpf;
+  private String crm;
+
+  @Enumerated(EnumType.STRING)
+  private Specialty specialty;
 
   @Embedded
   private Address address;
 
   private Boolean active;
 
-  public Patient(RegisterPatientRecord data) {
+  public Physician(RegisterPhysicianRecord data) {
     this.active = true;
     this.name = data.name();
     this.email = data.email();
     this.phone = data.phone();
-    this.cpf = data.cpf();
+    this.crm = data.crm();
+    this.specialty = data.specialty();
     this.address = new Address(data.address());
   }
 
-  public void delete() {
-    this.active = false;
-  }
-
-  public void updateData(@Valid PatientUpdateRecord data) {
+  public void updateData(@Valid PhysicianUpdateRecord data) {
     if (data.name() != null) {
       this.name = data.name();
-    }
-    if (data.email() != null) {
-      this.email = data.email();
     }
     if (data.phone() != null) {
       this.phone = data.phone();
@@ -61,4 +55,9 @@ public class Patient {
       this.address.updateData(data.address());
     }
   }
+
+  public void delete() {
+    this.active = false;
+  }
+
 }
