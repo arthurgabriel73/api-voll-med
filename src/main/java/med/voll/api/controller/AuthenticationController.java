@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import med.voll.api.domain.user.LoginRecord;
+import med.voll.api.domain.user.User;
+import med.voll.api.infra.security.TokenDataJWT;
+import med.voll.api.infra.security.TokenService;
 
 @RestController
 @RequestMapping("/login")
@@ -19,11 +22,14 @@ public class AuthenticationController {
   @Autowired
   private AuthenticationManager manager;
 
-  @PostMapping
-  public ResponseEntity doLogin(@RequestBody @Valid LoginRecord loginData) { 
-    var token = new UsernamePasswordAuthenticationToken(loginData.login(), loginData.password());
-    var authentication = manager.authenticate(token);
+  @Autowired
+  private TokenService tokenService;
 
-    return ResponseEntity.ok().build();
+  @PostMapping
+  public ResponseEntity<TokenDataJWT> doLogin(@RequestBody @Valid LoginRecord loginData) { 
+    var authenticationToken = new UsernamePasswordAuthenticationToken(loginData.login(), loginData.password());
+    var authentication = manager.authenticate(authenticationToken);
+    var tokenJwt = tokenService.generateToken((User) authentication.getPrincipal());
+    return ResponseEntity.ok(new TokenDataJWT(tokenJwt));
   }
 }
