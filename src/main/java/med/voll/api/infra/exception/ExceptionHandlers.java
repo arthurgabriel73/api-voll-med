@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import med.voll.api.domain.DomainException;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestControllerAdvice
@@ -20,4 +20,11 @@ public class ExceptionHandlers {
     var errors = exception.getFieldErrors();
     return ResponseEntity.badRequest().body(errors.stream().map(ValidationException::new).toList());
   }
+
+  @ExceptionHandler(DomainException.class)
+  public ResponseEntity<Object> handleDomainError(DomainException exception) {
+    return ResponseEntity.badRequest().body(exception.getMessage());
+  }
+
+  
 }
