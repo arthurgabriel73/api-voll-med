@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.domain.appointment.AppointmentDetailData;
 import med.voll.api.domain.appointment.AppointmentSchedule;
 import med.voll.api.domain.appointment.CancelAppointmentRecord;
 import med.voll.api.domain.appointment.RegisterAppointmentRecord;
 
 @RestController
 @RequestMapping("/appointments")
+@SecurityRequirement(name = "bearer-key")
 public class AppointmentController {
   @Autowired
   private AppointmentSchedule schedule;
